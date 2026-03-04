@@ -53,7 +53,12 @@ function createTextNode(x, y, text) {
         if (state.isEditingText) e.stopPropagation(); // Allow text selection
     });
     div.addEventListener('focus', () => state.isEditingText = true);
-    div.addEventListener('blur', () => state.isEditingText = false);
+    div.addEventListener('blur', () => {
+        state.isEditingText = false;
+        div.classList.remove('editing');
+        const sel = window.getSelection();
+        if (sel) sel.removeAllRanges();
+    });
     div.addEventListener('input', (e) => {
         const nodeData = state.nodes.find(n => n.id === id);
         if (nodeData) {
@@ -70,6 +75,19 @@ function createTextNode(x, y, text) {
     nodeLayer.appendChild(group);
 
     group.addEventListener('mousedown', (e) => handleNodeInteraction(e, id));
+    group.addEventListener('dblclick', (e) => {
+        if (!state.isDrawingLine) {
+            e.stopPropagation();
+            div.classList.add('editing');
+            div.focus();
+            const range = document.createRange();
+            range.selectNodeContents(div);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+    });
+
     state.nodes.push({ id, x, y, type: 'text', content: text, width: 120, height: 50 });
 }
 

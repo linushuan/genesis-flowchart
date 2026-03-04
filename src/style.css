@@ -109,10 +109,16 @@ line:hover { stroke-width: 4px; }
     word-wrap: break-word;
     white-space: pre-wrap;      /* Respects Enter key line breaks natively */
     overflow: hidden;
-    cursor: text;
+    cursor: default;
+    pointer-events: none;       /* Crucial: allows mouse down to hit the dragging bounding box */
+    user-select: none;
 }
 
-.node-text-container:focus {
-    background: rgba(0, 123, 255, 0.05);
+.node-text-container.editing {
+    background: #fff;
+    cursor: text;
+    pointer-events: auto;
+    user-select: text;
+    outline: 2px solid #007bff;
     border-radius: 4px;
 }

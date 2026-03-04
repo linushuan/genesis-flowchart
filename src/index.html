@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genesis Flowchart Engine</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="toolbar">
+        <button id="add-text-btn">Add Text Node</button>
+        <button id="add-img-btn">Add Image</button>
+        <button id="draw-line-btn">Draw Line</button>
+        <button id="export-svg-btn" style="margin-top: 10px;">Export as SVG</button>
+        <button id="export-png-btn" style="margin-top: 5px; background: #e6f2ff; border-color: #b3d9ff;">Export as PNG</button>
+
+        <div class="property-panel" id="prop-panel" style="display: none;">
+            <h3 id="panel-title">Properties</h3>
+
+            <div id="node-props">
+                <label>Text: <input type="text" id="node-text"></label>
+                <label>Shape:
+                    <select id="shape-select">
+                        <option value="rect">Rectangle</option>
+                        <option value="circle">Circle</option>
+                        <option value="diamond">Diamond</option>
+                    </select>
+                </label>
+                <label>Fill Color: <input type="color" id="node-fill" value="#ffffff"></label>
+                <label>Border Color: <input type="color" id="node-border" value="#333333"></label>
+                <label>Text Color: <input type="color" id="node-text-color" value="#333333"></label>
+                <label>Font Size: <input type="number" id="font-size" min="10" max="48" value="14"></label>
+                <label>Width: <input type="number" id="node-width" min="50" max="300" value="120"></label>
+                <label>Height: <input type="number" id="node-height" min="30" max="300" value="50"></label>
+            </div>
+
+            <div id="edge-props" style="display: none;">
+                <label>Line Color: <input type="color" id="edge-color" value="#333333"></label>
+                <label>Style:
+                    <select id="edge-style">
+                        <option value="solid">Solid</option>
+                        <option value="dashed">Dashed</option>
+                    </select>
+                </label>
+                <label>Arrow:
+                    <select id="edge-arrow">
+                        <option value="arrow">Arrowhead</option>
+                        <option value="none">Straight Line</option>
+                    </select>
+                </label>
+            </div>
+
+            <button id="delete-btn" style="margin-top: 15px; background: #ffcccc; border-color: #ff9999; color: #cc0000;">Delete Selected</button>
+        </div>
+        <input type="file" id="img-upload" accept="image/*" style="display: none;">
+    </div>
+
+    <div class="canvas-container">
+        <svg id="flow-canvas" width="100%" height="100%">
+            <defs>
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                </pattern>
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#333333" />
+                </marker>
+            </defs>
+            <rect id="bg-grid" width="100%" height="100%" fill="url(#grid)" />
+            <g id="edge-layer"></g>
+            <g id="node-layer"></g>
+        </svg>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
